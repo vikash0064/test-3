@@ -1,4 +1,11 @@
 {
+  "name": "mini-insta",
+  "version": "1.0.0",
+  "description": "Mini Instagram clone",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.9.0",
