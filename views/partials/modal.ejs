@@ -1,0 +1,29 @@
+<div id="createPostModal" class="modal-overlay" onclick="closeModalOnLayout(event)">
+    <div class="modal-content">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dbdbdb; padding: 10px 15px;">
+            <h3 style="margin: 0; font-size: 16px;">Create New Post</h3>
+            <span style="cursor: pointer; font-size: 24px;" onclick="closeModal()">&times;</span>
+        </div>
+        <form action="/post" method="POST" enctype="multipart/form-data" style="padding: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Post
+                    Title</label>
+                <input type="text" name="title" placeholder="Enter title (optional)"
+                    style="width: 100%; border: 1px solid #dbdbdb; border-radius: 4px; padding: 10px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Caption</label>
+                <textarea name="caption" placeholder="Write a caption..."
+                    style="width: 100%; border: 1px solid #dbdbdb; border-radius: 4px; padding: 10px; resize: none; height: 80px;"></textarea>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px;">Upload
+                    Image</label>
+                <input type="file" name="image" accept="image/*" required style="font-size: 14px;">
+            </div>
+            <button type="submit"
+                style="width: 100%; background: #0095f6; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer;">Post</button>
+        </form>
+    </div>
+</div>

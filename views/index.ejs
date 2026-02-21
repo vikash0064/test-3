@@ -1,0 +1,128 @@
+<html>
+
+<head>
+  <title>Blogs</title>
+  <%- include('partials/common-styles') %>
+</head>
+
+<body>
+
+  <%- include('partials/sidebar') %>
+    <%- include('partials/modal') %>
+      <%- include('partials/mobile-nav') %>
+
+        <div class="main-content">
+          <%- include('partials/top-nav') %>
+
+            <% posts.forEach(post=> { %>
+              <div class="post-card">
+
+                <!-- Header: Avatar + Username on left, 3-dot menu on right -->
+                <div class="post-header">
+                  <div class="user-info">
+                    <% if (post.user && post.user.avatar) { %>
+                      <img src="<%= post.user.avatar %>">
+                      <% } else { %>
+                        <div style="width:32px; height:32px; background:#efefef; border-radius:50%"></div>
+                        <% } %>
+                          <strong>
+                            <%= post.user ? post.user.username : 'user' %>
+                          </strong>
+                  </div>
+
+                  <% if (post.user && post.user._id.toString()===user._id.toString()) { %>
+                    <div style="position: relative;">
+                      <div class="menu-dot" onclick="toggleMenu('menu-<%= post._id %>')">•••</div>
+                      <div id="menu-<%= post._id %>" class="dropdown-menu">
+                        <a href="/post/<%= post._id %>/edit">Edit</a>
+                        <form method="POST" action="/post/<%= post._id %>/delete" style="margin:0;">
+                          <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                      </div>
+                    </div>
+                    <% } %>
+                </div>
+
+                <!-- Image -->
+                <% if (post.image) { %>
+                  <a href="/post/<%= post._id %>" class="post-image-container">
+                    <img src="<%= post.image %>" class="post-image">
+                  </a>
+                  <% } %>
+
+                    <!-- Actions: Like heart + Comment icon -->
+                    <div class="post-actions">
+                      <div class="action-icons">
+                        <form method="POST" action="/post/<%= post._id %>/like" style="margin:0;">
+                          <button type="submit" class="action-btn">
+                            <% const isLiked=post.likes && post.likes.includes(user._id.toString()); %>
+                              <svg aria-label="Like" height="24" viewBox="0 0 24 24" width="24"
+                                fill="<%= isLiked ? '#ed4956' : 'none' %>"
+                                stroke="<%= isLiked ? '#ed4956' : 'currentColor' %>">
+                                <path
+                                  d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.077 2.5 12.194 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.325.487.568 1.05.617 1.649.034.417.433.417.467 0a4.213 4.213 0 013.675-1.941 4.213 4.213 0 013.15 1.353z"
+                                  stroke-width="2"></path>
+                              </svg>
+                          </button>
+                        </form>
+                        <a href="/post/<%= post._id %>" class="action-btn" style="color:inherit;">
+                          <svg aria-label="Comment" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z" fill="none"
+                              stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+                          </svg>
+                        </a>
+                      </div>
+
+                      <!-- Likes count -->
+                      <div class="likes-count">
+                        <%= post.likes ? post.likes.length : 0 %> likes
+                      </div>
+
+                      <!-- Caption with username -->
+                      <div class="post-caption">
+                        <b>
+                          <%= post.user ? post.user.username : 'user' %>
+                        </b>
+                        <%= post.caption %>
+                      </div>
+
+                      <!-- View comments link + last comment -->
+                      <% if (post.comments && post.comments.length> 0) { %>
+                        <a href="/post/<%= post._id %>" class="view-comments-btn">View all <%= post.comments.length %>
+                            comments</a>
+                        <% const lastC=post.comments[post.comments.length - 1]; %>
+                          <div class="latest-comment"><b>
+                              <%= lastC.username %>
+                            </b>
+                            <%= lastC.text %>
+                          </div>
+                          <% } %>
+                    </div>
+
+                    <!-- Comment input -->
+                    <form method="POST" action="/post/<%= post._id %>/comment" class="comment-form">
+                      <input type="text" name="comment" class="comment-input" placeholder="Add a comment..." required>
+                      <button type="submit" class="comment-submit">Post</button>
+                    </form>
+
+              </div>
+              <% }) %>
+
+                <!-- Pagination -->
+                <% if (totalPages> 1) { %>
+                  <div class="pagination">
+                    <% if (currentPage> 1) { %>
+                      <a href="/?page=<%= currentPage - 1 %>" class="pagination-link">Previous</a>
+                      <% } %>
+                        <span class="pagination-info">Page <%= currentPage %> of <%= totalPages %></span>
+                        <% if (currentPage < totalPages) { %>
+                          <a href="/?page=<%= currentPage + 1 %>" class="pagination-link">Next</a>
+                          <% } %>
+                  </div>
+                  <% } %>
+        </div>
+
+        <%- include('partials/scripts') %>
+</body>
+
+</html>

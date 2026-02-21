@@ -1,0 +1,17 @@
+API Endpoints for Testing:
+
+POST /post                - Create a new post
+GET  /post/new            - Show new post form
+GET  /                    - Show feed (all posts)
+POST /post/:id/edit       - Edit a post
+POST /post/:id/delete     - Delete a post
+POST /post/:id/like       - Like/unlike a post
+POST /post/:id/comment    - Add a comment to a post
+GET  /user/:id            - View user profile
+GET  /user/:id/settings   - Show user settings form
+POST /user/:id/settings   - Update user settings
+GET  /register            - Show registration form
+POST /register            - Register a new user
+GET  /login               - Show login form
+POST /login               - Login user
+GET  /logout              - Logout user

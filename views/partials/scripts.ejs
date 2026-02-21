@@ -1,0 +1,75 @@
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    // Check initial theme
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('.main-content');
+        sidebar.classList.toggle('expanded');
+
+        if (sidebar.classList.contains('expanded')) {
+            mainContent.classList.add('sidebar-expanded');
+        } else {
+            mainContent.classList.remove('sidebar-expanded');
+        }
+    }
+
+    function openModal() {
+        document.getElementById('createPostModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('createPostModal').style.display = 'none';
+        // Clear form and preview on close
+        const form = document.querySelector('#createPostModal form');
+        if (form) form.reset();
+        const preview = document.getElementById('createPreview');
+        if (preview) {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
+    }
+
+    function previewCreateImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.getElementById('createPreview');
+                if (img) {
+                    img.src = e.target.result;
+                    img.style.display = 'inline-block';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function closeModalOnLayout(event) {
+        if (event.target.id === 'createPostModal') closeModal();
+    }
+
+    function toggleMenu(id) {
+        const menus = document.querySelectorAll('.dropdown-menu');
+        menus.forEach(m => {
+            if (m.id !== id) m.classList.remove('show');
+        });
+        const target = document.getElementById(id);
+        if (target) target.classList.toggle('show');
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.menu-dot')) {
+            const menus = document.querySelectorAll('.dropdown-menu');
+            menus.forEach(m => m.classList.remove('show'));
+        }
+    }
+</script>
