@@ -18,12 +18,12 @@ Upload your images to the `screenshots/` folder in your project, and make sure t
 
 ---
 
-## 👤 Register Page
+## ➕ Create Post
 ![Register](screenshots/Screenshot%202026-02-23%20104805.png)
 
 ---
 
-## ➕ Create Post
+## 👤 Register Page
 ![Create Post](screenshots/Screenshot%202026-02-23%20103136.png)
 
 ---
